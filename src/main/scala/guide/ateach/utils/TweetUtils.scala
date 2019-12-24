@@ -2,10 +2,23 @@ package guide.ateach.utils
 
 import java.util.concurrent.atomic.AtomicLong
 
+import org.apache.spark.streaming.Seconds
 import org.apache.spark.streaming.dstream.DStream
 
 object TweetUtils {
-  
+  def mostPopularHashtag(tweets: DStream[String]) = {
+
+    tweets
+      .flatMap(tweet => tweet.split(" "))
+      .filter(word => word.startsWith("#"))
+      .map(hashtag => (hashtag, 1))
+      .reduceByKeyAndWindow((x,y) => x+y, (x,y) => x-y, Seconds(300), Seconds(1)) //<- Reducing on 5m window sliding every 1 sec
+      .transform(rdd => rdd.sortBy(x => x._2,false))
+      .print(10)
+
+  }
+
+
   def averageTweetLength(tweets: DStream[String]) = {
     val lengths = tweets.map(tweet => tweet.length())
 
