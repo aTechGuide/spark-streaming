@@ -17,7 +17,7 @@ object Tweets extends App {
     TweetUtils.mostPopularHashtag(statuses)
 
     // Kick it all off
-    ssc.checkpoint("/Users/kamali/mcode/tmp/")
+    ssc.checkpoint("/Users/kamali/mcode/checkpoint")
     ssc.start()
     ssc.awaitTermination()
 }
