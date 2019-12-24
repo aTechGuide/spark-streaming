@@ -1,13 +1,12 @@
 package guide.ateach.streaming
 
-import org.apache.spark.streaming.dstream.DStream
 import org.apache.spark.streaming.twitter.TwitterUtils
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import guide.ateach.utils.TweetUtils
 
 object Tweets extends App {
 
-    Utilities.setupTwitter()
+    TweetUtils.setupTwitter()
 
     val ssc = new StreamingContext("local[*]", "PrintTweets", Seconds(1))
     val tweets = TwitterUtils.createStream(ssc, None)
