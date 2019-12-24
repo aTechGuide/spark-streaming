@@ -1,11 +1,11 @@
 package guide.ateach.streaming
 
+import org.apache.spark.streaming.dstream.DStream
 import org.apache.spark.streaming.twitter.TwitterUtils
 import org.apache.spark.streaming.{Seconds, StreamingContext}
+import guide.ateach.utils.TweetUtils
 
-object PrintTweets {
-
-  def main(args: Array[String]) {
+object Tweets extends App {
 
     // Configure Twitter credentials using twitter.txt
     Utilities.setupTwitter()
@@ -23,11 +23,11 @@ object PrintTweets {
     // Now extract the text of each status update into RDD's using map()
     val statuses = tweets.map(status => status.getText())
 
-    // Print out the first ten
-    statuses.print()
+    TweetUtils.printTweets(statuses)
+    TweetUtils.saveTweets(statuses)
+    TweetUtils.averageTweetLength(statuses)
 
     // Kick it all off
     ssc.start()
     ssc.awaitTermination()
-  }
 }
