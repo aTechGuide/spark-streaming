@@ -12,7 +12,8 @@ object LogParser extends App {
   val lines = ssc.socketTextStream("127.0.0.1", 9999, StorageLevel.MEMORY_AND_DISK_SER)
 
   //LogUtils.trackTopURL(lines)
-  LogUtils.logAlarmer(lines)
+  //LogUtils.logAlarmer(lines)
+  LogUtils.logSQL(lines)
 
   ssc.checkpoint("/Users/kamali/mcode/tmp/")
   ssc.start()

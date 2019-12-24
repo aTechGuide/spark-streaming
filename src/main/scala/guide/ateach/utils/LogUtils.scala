@@ -2,10 +2,55 @@ package guide.ateach.utils
 
 import java.util.regex.{Matcher, Pattern}
 
+import org.apache.spark.sql.SparkSession
 import org.apache.spark.streaming.Seconds
 import org.apache.spark.streaming.dstream.ReceiverInputDStream
 
 object LogUtils {
+
+  def logSQL(lines: ReceiverInputDStream[String]) = {
+
+    val pattern = apacheLogPattern()
+
+    // Extracting (URL, status, user agent)
+    val requests = lines.map(x => {
+      val matcher:Matcher = pattern.matcher(x)
+      if (matcher.matches()) {
+        val request = matcher.group(5)
+        val requestFields = request.toString.split(" ")
+        val url = util.Try(requestFields(1)) getOrElse "[error]"
+
+        (url, matcher.group(6).toInt, matcher.group(9))
+      } else {
+        ("error", 0, "error")
+      }
+    })
+
+    requests.foreachRDD((rdd, _) => {
+
+      val sparkSession = SparkSession
+        .builder()
+        .appName("LogSQL")
+        .getOrCreate()
+
+      import sparkSession.implicits._
+
+
+
+      val requestDF = rdd.map( request => Record(request._1, request._2, request._3)).toDF()
+      requestDF.createOrReplaceTempView("requests")
+
+      val wordCountDF = sparkSession
+        .sqlContext
+        .sql("select agent, count(*) as Total from requests group by agent")
+
+      wordCountDF.show()
+
+    })
+  }
+
+  case class Record(url: String, status: Int, agent: String)
+
   def logAlarmer(lines: ReceiverInputDStream[String]) = {
 
     val pattern = apacheLogPattern()
