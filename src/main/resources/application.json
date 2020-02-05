@@ -1,0 +1,7 @@
+{
+  "spark" : {
+    "name" : "SparkApp",
+    "parallel" : 10,
+    "url": "test-url"
+  }
+}
