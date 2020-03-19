@@ -12,7 +12,7 @@ import org.apache.spark.sql.{Row, SparkSession}
   * This script creates stream directly from log folder
   */
 
-object StructuredStreamingLogs extends App {
+object SSLogs extends App {
 
   case class LogEntry(ip:String, client:String, user:String, dateTime:String, request:String, status:String, bytes:String, referer:String, agent:String)
 

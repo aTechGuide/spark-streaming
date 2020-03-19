@@ -6,7 +6,7 @@ import org.apache.spark.sql.functions._
 object SSGroups {
 
   private val spark = SparkSession.builder()
-    .appName("")
+    .appName(getClass.getSimpleName)
     .master("local[2]")
     .getOrCreate()
 

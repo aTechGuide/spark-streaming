@@ -9,10 +9,10 @@ import org.apache.spark.sql.functions._
   *
   * Sending data to socket -> nc -kl 12345
   */
-object StructuredStreamFromSocket {
+object SSFromSocket {
 
   private val spark = SparkSession.builder()
-    .appName("")
+    .appName("StructuredStreamFromSocket")
     .master("local[2]")
     .getOrCreate()
 

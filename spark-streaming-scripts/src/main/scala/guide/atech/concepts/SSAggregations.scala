@@ -14,7 +14,7 @@ import org.apache.spark.sql.types.IntegerType
 object SSAggregations {
 
   private val spark = SparkSession.builder()
-    .appName("")
+    .appName("SSAggregations")
     .master("local[2]")
     .getOrCreate()
 

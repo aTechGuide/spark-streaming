@@ -13,7 +13,7 @@ import scala.concurrent.duration._
 object Triggers {
 
   private val spark = SparkSession.builder()
-    .appName("")
+    .appName("Triggers")
     .master("local[2]")
     .getOrCreate()
 

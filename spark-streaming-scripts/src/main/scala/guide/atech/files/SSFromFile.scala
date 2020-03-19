@@ -1,8 +1,6 @@
 package guide.atech.files
 
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.functions._
-import org.apache.spark.sql.streaming.StreamingQuery
 import guide.atech.schema.common._
 
 /**
@@ -10,10 +8,10 @@ import guide.atech.schema.common._
   *
   * Sending data to socket -> nc -kl 12345
   */
-object StructuredStreamFromFile {
+object SSFromFile {
 
   private val spark = SparkSession.builder()
-    .appName("")
+    .appName(getClass.getSimpleName)
     .master("local[2]")
     .getOrCreate()
 
