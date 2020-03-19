@@ -1,4 +1,4 @@
-package guide.atech.utils
+package guide.atech.twitter
 
 import java.util.concurrent.atomic.AtomicLong
 

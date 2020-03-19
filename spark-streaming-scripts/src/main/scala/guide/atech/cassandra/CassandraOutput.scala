@@ -3,7 +3,7 @@ package guide.atech.cassandra
 import java.util.regex.Matcher
 
 import com.datastax.spark.connector._
-import guide.atech.utils.LogUtils
+import guide.atech.socket.LogUtils
 import org.apache.spark.SparkConf
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.{Seconds, StreamingContext}

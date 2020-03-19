@@ -1,16 +1,16 @@
-package guide.atech.streaming
+package guide.atech.files
 
-import org.apache.spark._
-import org.apache.spark.SparkContext._
-import org.apache.spark.sql._
-import org.apache.log4j._
-import org.apache.spark.sql.functions._
-import java.util.regex.Pattern
-import java.util.regex.Matcher
 import java.text.SimpleDateFormat
 import java.util.Locale
+import java.util.regex.{Matcher, Pattern}
 
-import guide.atech.utils.LogUtils
+import guide.atech.socket.LogUtils
+import org.apache.spark.sql.functions.window
+import org.apache.spark.sql.{Row, SparkSession}
+
+/**
+  * This script creates stream directly from log folder
+  */
 
 object StructuredStreamingLogs extends App {
 

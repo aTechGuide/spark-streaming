@@ -1,9 +1,12 @@
-package guide.atech.streaming
+package guide.atech.socket
 
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.{Seconds, StreamingContext}
-import guide.atech.utils.LogUtils
 
+/**
+  * Open a socket and push log file into it using following
+  * nc -kl 9999 -i 1 < log/access_log.txt
+  */
 object LogParser extends App {
 
   val ssc = new StreamingContext("local[*]", "LogParser", Seconds(1))

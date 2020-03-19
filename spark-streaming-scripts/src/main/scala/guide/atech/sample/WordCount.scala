@@ -6,7 +6,6 @@ import com.typesafe.config.ConfigFactory
 import org.apache.spark.{SparkConf, SparkContext}
 
 
-
 object WordCount {
 
   def main(args: Array[String]): Unit = {

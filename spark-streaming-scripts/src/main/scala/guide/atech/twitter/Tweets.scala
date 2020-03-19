@@ -1,8 +1,7 @@
-package guide.atech.streaming
+package guide.atech.twitter
 
 import org.apache.spark.streaming.twitter.TwitterUtils
 import org.apache.spark.streaming.{Seconds, StreamingContext}
-import guide.atech.utils.TweetUtils
 
 object Tweets extends App {
 
