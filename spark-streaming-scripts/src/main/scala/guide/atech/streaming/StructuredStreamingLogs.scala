@@ -1,4 +1,4 @@
-package guide.ateach.streaming
+package guide.atech.streaming
 
 import org.apache.spark._
 import org.apache.spark.SparkContext._
@@ -10,7 +10,7 @@ import java.util.regex.Matcher
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-import guide.ateach.utils.LogUtils
+import guide.atech.utils.LogUtils
 
 object StructuredStreamingLogs extends App {
 

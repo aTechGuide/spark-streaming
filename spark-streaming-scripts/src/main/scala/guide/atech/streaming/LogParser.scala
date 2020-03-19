@@ -1,8 +1,8 @@
-package guide.ateach.streaming
+package guide.atech.streaming
 
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.{Seconds, StreamingContext}
-import guide.ateach.utils.LogUtils
+import guide.atech.utils.LogUtils
 
 object LogParser extends App {
 

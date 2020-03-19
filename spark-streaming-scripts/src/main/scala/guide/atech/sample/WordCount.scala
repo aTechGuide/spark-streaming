@@ -1,4 +1,4 @@
-package guide.ateach.sample
+package guide.atech.sample
 
 import java.io.File
 

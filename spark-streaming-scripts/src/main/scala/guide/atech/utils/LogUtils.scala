@@ -1,4 +1,4 @@
-package guide.ateach.utils
+package guide.atech.utils
 
 import java.util.regex.{Matcher, Pattern}
 

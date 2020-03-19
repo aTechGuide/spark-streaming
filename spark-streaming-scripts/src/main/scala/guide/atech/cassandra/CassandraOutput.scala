@@ -1,9 +1,9 @@
-package guide.ateach.cassandra
+package guide.atech.cassandra
 
 import java.util.regex.Matcher
 
 import com.datastax.spark.connector._
-import guide.ateach.utils.LogUtils
+import guide.atech.utils.LogUtils
 import org.apache.spark.SparkConf
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.{Seconds, StreamingContext}
