@@ -18,7 +18,7 @@ object StructuredStreamFromSocket {
 
   spark.sparkContext.setLogLevel("ERROR")
 
-  private def readFromScoket = {
+  private def readFromSocket = {
     spark
       .readStream
       .format("socket")
@@ -30,7 +30,7 @@ object StructuredStreamFromSocket {
 
   def main(args: Array[String]): Unit = {
 
-    val lines = readFromScoket
+    val lines = readFromSocket
 
     // transformation
     val shortLines = lines.filter(length(col("value")) <= 5)
