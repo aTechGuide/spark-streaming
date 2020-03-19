@@ -1,4 +1,4 @@
-name := "SparkStreaming"
+name := "spark-streaming-scripts"
 
 version := "0.1"
 
