@@ -13,6 +13,6 @@ Spark Streaming Scripts
 - Create `twitter.txt` file with Twitter Credentials. For example check `twitter_sample.txt`
 
 # References
-- This project contains code snippets from examples from 
+- This project contains code snippets / data from following sources
   - [Taming big data with spark streaming hands on](https://www.udemy.com/course/taming-big-data-with-spark-streaming-hands-on/) Udemy Course
   - [rockthejvm.com  spark-streaming](https://rockthejvm.com/p/spark-streaming)
