@@ -54,7 +54,7 @@ object TweetUtils {
     statuses.print()
   }
 
-  def setupTwitter() = {
+  def setupTwitter(): Unit = {
     import scala.io.Source
 
     for (line <- Source.fromFile("./twitter.txt").getLines) {

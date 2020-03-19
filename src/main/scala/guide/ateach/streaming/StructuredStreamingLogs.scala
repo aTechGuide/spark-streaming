@@ -59,7 +59,7 @@ object StructuredStreamingLogs extends App {
     .builder()
     .appName("Structured Streaming Logs")
     .master("local[*]")
-    .config("spark.sql.streaming.checkpointLocation", "/Users/kamali/mcode/checkpoint")
+    .config("spark.sql.streaming.checkpointLocation", "~/code/checkpoint")
     .getOrCreate()
 
   spark.sparkContext.setLogLevel("ERROR")

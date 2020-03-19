@@ -5,6 +5,8 @@ import java.io.File
 import com.typesafe.config.ConfigFactory
 import org.apache.spark.{SparkConf, SparkContext}
 
+
+
 object WordCount {
 
   def main(args: Array[String]): Unit = {
@@ -28,9 +30,6 @@ object WordCount {
     println("app.debug = " + config.getBoolean("app.debug"))
     println("spark.url = " + config.getString("spark.url"))
     println("spark.name = " + config.getString("spark.name"))
-
-//    println("system Properties = " + ConfigFactory.systemProperties())
-//    println("system Environment = " + ConfigFactory.systemEnvironment())
 
     sc.stop()
   }

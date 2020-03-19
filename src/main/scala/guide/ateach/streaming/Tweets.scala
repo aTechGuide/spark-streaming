@@ -6,18 +6,20 @@ import guide.ateach.utils.TweetUtils
 
 object Tweets extends App {
 
+    // Uses org.apache.bahir
+
     TweetUtils.setupTwitter()
 
     val ssc = new StreamingContext("local[*]", "PrintTweets", Seconds(1))
     val tweets = TwitterUtils.createStream(ssc, None)
-    val statuses = tweets.map(status => status.getText())
+    val statuses = tweets.map(status => status.getText)
 
     ssc.sparkContext.setLogLevel("ERROR")
 
     TweetUtils.mostPopularHashtag(statuses)
 
     // Kick it all off
-    ssc.checkpoint("/Users/kamali/mcode/checkpoint")
+    ssc.checkpoint("~/code/checkpoint")
     ssc.start()
     ssc.awaitTermination()
 }

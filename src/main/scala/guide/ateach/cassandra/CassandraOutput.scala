@@ -8,11 +8,10 @@ import org.apache.spark.SparkConf
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 
+/**
+  * Create Table CREATE TABLE cassandra.log (ip text PRIMARY KEY, status int, url text, useragent text);
+  */
 object CassandraOutput extends App {
-
-"""
-Create Table CREATE TABLE cassandra.log (ip text PRIMARY KEY, status int, url text, useragent text);
-"""
 
   var conf = new SparkConf()
   conf.set("spark.cassandra.connection.host", "127.0.0.1")
@@ -46,7 +45,7 @@ Create Table CREATE TABLE cassandra.log (ip text PRIMARY KEY, status int, url te
     rdd.saveToCassandra("cassandra", "log", SomeColumns("ip", "status", "url", "useragent"))
   })
 
-  ssc.checkpoint("/Users/kamali/mcode/checkpoint")
+  ssc.checkpoint("~/code/checkpoint")
   ssc.start()
   ssc.awaitTermination()
 
