@@ -1,4 +1,4 @@
-package common
+package guide.atech.schema
 
 import java.sql.Date
 
