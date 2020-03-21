@@ -6,8 +6,6 @@ scalaVersion := "2.12.10"
 
 // Library Versions
 val sparkVersion = "3.0.0-preview"
-val cassandraConnectorVersion = "2.4.2"
-val twitter4jVersion = "4.0.4"
 
 resolvers ++= Seq(
   "bintray-spark-packages" at "https://dl.bintray.com/spark-packages/maven",

@@ -14,7 +14,6 @@ Spark Streaming Kafka Integration
 ## Set Up
 
 - Create a checkpoint location `checkpoint` 
-- Create `twitter.txt` file with Twitter Credentials. For example check `twitter_sample.txt`
 
 # References
 - This project contains code snippets / data from following sources
