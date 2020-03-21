@@ -9,6 +9,11 @@ import org.apache.spark.sql.SparkSession
 import org.apache.spark.streaming.dstream.DStream
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 
+
+/**
+  *
+  * cat people-1m.txt | nc -lk 12345
+  */
 object DStreams {
 
   private val spark = SparkSession.builder()
@@ -116,8 +121,6 @@ object DStreams {
    readFromSocket()
 
    // readFromFile()
-
-
 
   }
 
