@@ -11,7 +11,7 @@ import org.apache.spark.streaming.{Seconds, StreamingContext}
 /**
   * Create Table CREATE TABLE cassandra.log (ip text PRIMARY KEY, status int, url text, useragent text);
   */
-object CassandraOutput extends App {
+object DSCassandraOutput extends App {
 
   var conf = new SparkConf()
   conf.set("spark.cassandra.connection.host", "127.0.0.1")
@@ -45,7 +45,7 @@ object CassandraOutput extends App {
     rdd.saveToCassandra("cassandra", "log", SomeColumns("ip", "status", "url", "useragent"))
   })
 
-  ssc.checkpoint("~/code/checkpoint")
+  ssc.checkpoint("checkpoint")
   ssc.start()
   ssc.awaitTermination()
 

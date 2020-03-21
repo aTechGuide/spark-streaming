@@ -23,11 +23,7 @@ libraryDependencies ++= Seq(
   // streaming
   "org.apache.spark" %% "spark-streaming" % sparkVersion,
 
-  // streaming-kafka
-  "org.apache.spark" % "spark-sql-kafka-0-10_2.12" % sparkVersion,
-  "org.apache.spark" %% "spark-streaming-kafka-0-10" % sparkVersion,
-
-  // cassandra - this version officially works with Spark 2.4, but tested with Spark 3.0-preview as well
+  // Cassandra Driver
   "com.datastax.spark" %% "spark-cassandra-connector" % cassandraConnectorVersion,
 
   // twitter
