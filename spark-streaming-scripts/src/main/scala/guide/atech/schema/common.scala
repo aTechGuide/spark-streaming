@@ -21,4 +21,10 @@ object common {
     StructField("value", DoubleType)
   ))
 
+  val onlinePurchaseSchema = StructType(Array(
+    StructField("id", StringType),
+    StructField("time", TimestampType),
+    StructField("item", StringType),
+    StructField("quantity", IntegerType)
+  ))
 }

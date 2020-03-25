@@ -9,7 +9,7 @@ Spark Streaming Scripts
 
 ## Set Up
 
-- Create a checkpoint location `~/code/checkpoint/` 
+- Create a checkpoint location `checkpoint` 
 - Create `twitter.txt` file with Twitter Credentials. For example check `twitter_sample.txt`
 
 # References

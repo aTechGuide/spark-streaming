@@ -18,7 +18,7 @@ object LogParser extends App {
   //LogUtils.logAlarmer(lines)
   LogUtils.logSQL(lines)
 
-  ssc.checkpoint("~/code/checkpoint")
+  ssc.checkpoint("checkpoint")
   ssc.start()
   ssc.awaitTermination()
 
