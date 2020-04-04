@@ -3,7 +3,7 @@
 Spark Streaming Scripts
 
 ## Commands
-- To publish logs to socket `nc -kl 9999 -i 1 < access_log.txt`
+- To publish logs to socket `nc -kl 9999 -i 1 < log/access_log.txt`
 - Spark Submit
 
 ## Set Up
