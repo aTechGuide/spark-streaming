@@ -30,7 +30,7 @@ object Watermarks {
       .load()
   }
 
-  private def testWatermarks: Unit = {
+  private def testWatermarks(): Unit = {
 
     import spark.implicits._
 
@@ -62,10 +62,10 @@ object Watermarks {
       .option("numRows", 50)
       .format("console")
       .outputMode("append")
-      .trigger(Trigger.ProcessingTime(2.seconds)) // Setting the batch time. That every 2seconds new batch will be triggered
+      .trigger(Trigger.ProcessingTime(2.seconds)) // Setting the batch time. That every 2 seconds new batch will be triggered
       .start()
 
-      // usweful skill for debugging
+      // useful skill for debugging
       debugQuery(query)
 
       query.awaitTermination()
@@ -86,7 +86,7 @@ object Watermarks {
 
   def main(args: Array[String]): Unit = {
 
-    testWatermarks
+    testWatermarks()
 
   }
 

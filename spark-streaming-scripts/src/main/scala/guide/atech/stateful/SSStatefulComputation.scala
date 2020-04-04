@@ -1,10 +1,10 @@
-package guide.atech.eventTime
+package guide.atech.stateful
 
-import org.apache.spark.sql.{Dataset, SparkSession}
-import org.apache.spark.sql.functions._
+import org.apache.spark.sql.functions.{col, sum}
 import org.apache.spark.sql.streaming.{GroupState, GroupStateTimeout}
+import org.apache.spark.sql.{DataFrame, Dataset, SparkSession}
 
-object StatefulComputation {
+object SSStatefulComputation {
 
   private val spark = SparkSession.builder()
     .appName(getClass.getSimpleName)
@@ -19,7 +19,7 @@ object StatefulComputation {
 
   import spark.implicits._
 
-  private def readFromSocket = {
+  private def readFromSocket: DataFrame = {
 
     spark
       .readStream
@@ -29,7 +29,7 @@ object StatefulComputation {
       .load()
   }
 
-  def readSocialUpdates = {
+  private def readSocialUpdates: Dataset[SocialPostRecord] = {
 
     // postType, count, storageGroups
     val data = readFromSocket
@@ -42,12 +42,12 @@ object StatefulComputation {
     data
   }
 
-  def updateAverageStorage(
+  private def updateAverageStorage(
                           // Key by which we have made the groups
                           postType: String,
-                          // Batch of data associated to the key
+                          // Batch of data associated to the key. Iterator of SocialPostRecord, which is the Type associated with Stream
                           group: Iterator[SocialPostRecord],
-                          // Types with intermediate state that we want to manage, like an "option". We have to manage manually
+                          // Typed with intermediate state that we want to "manually" manage as the group is processed, like an "option".
                           state: GroupState[SocialPostBulk]
                           ): AveragePostStorage // a single value that we will output per the entire group
   = {
@@ -84,15 +84,17 @@ object StatefulComputation {
 
   }
 
-  def getAveragePostStorage = {
-    val socialStream = readSocialUpdates
+  private def computeAveragePostStorage(): Unit = {
+    val socialStream: Dataset[SocialPostRecord] = readSocialUpdates
 
+    // Option 1 [Observation in Stateful Compuration]
     val regularSqlAverageByPostType = socialStream
       .groupByKey(_.postType)
       .agg(sum(col("count")).as("totalCount").as[Int], sum(col("storageUsed")).as("totalStorage").as[Int])
       .selectExpr("key as postType", "totalStorage / totalCount as avgStorage")
 
 
+    // Option 2
     val averageByPostType = socialStream
       .groupByKey(_.postType)
       .mapGroupsWithState(GroupStateTimeout.NoTimeout())(updateAverageStorage)
@@ -104,19 +106,22 @@ object StatefulComputation {
 
      */
 
-
-      averageByPostType
-        .writeStream
-        .outputMode("update") // append not supported on mapGroupsWithState
-        .foreachBatch { (batch: Dataset[AveragePostStorage], _: Long) =>
-        batch.show(false)
-      }
-          .start()
-          .awaitTermination()
+    averageByPostType
+      .writeStream
+      .outputMode("update") // append not supported on mapGroupsWithState
+      .foreachBatch { (batch: Dataset[AveragePostStorage], _: Long) =>
+          batch.show(false)
+        }
+      .start()
+      .awaitTermination()
   }
 
   def main(args: Array[String]): Unit = {
-    getAveragePostStorage
+
+    /**
+      * To produce Input -> nc -lk 12345
+      */
+    computeAveragePostStorage()
   }
 
   /*
@@ -132,5 +137,4 @@ object StatefulComputation {
       audio,3,60000
       text,1,2500
    */
-
 }
