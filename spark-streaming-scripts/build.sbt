@@ -8,6 +8,8 @@ scalaVersion := "2.12.10"
 val sparkVersion = "3.0.0-preview"
 val cassandraConnectorVersion = "2.4.2"
 val twitter4jVersion = "4.0.4"
+val twitterBahirVersion = "2.4.0"
+val configVersion = "1.4.0"
 
 resolvers ++= Seq(
   "bintray-spark-packages" at "https://dl.bintray.com/spark-packages/maven",
@@ -22,6 +24,9 @@ libraryDependencies ++= Seq(
 
   // streaming
   "org.apache.spark" %% "spark-streaming" % sparkVersion,
+  
+  // mllib
+  "org.apache.spark" %% "spark-mllib" % sparkVersion,
 
   // Cassandra Driver
   "com.datastax.spark" %% "spark-cassandra-connector" % cassandraConnectorVersion,
@@ -29,9 +34,9 @@ libraryDependencies ++= Seq(
   // twitter
   "org.twitter4j" % "twitter4j-core" % twitter4jVersion,
   "org.twitter4j" % "twitter4j-stream" % twitter4jVersion,
-  "org.apache.bahir" %% "spark-streaming-twitter" % "2.4.0"
-)
+  "org.apache.bahir" %% "spark-streaming-twitter" % twitterBahirVersion,
 
-// Configuration Library
-libraryDependencies += "com.typesafe" % "config" % "1.4.0"
-// libraryDependencies += "org.apache.bahir" %% "spark-streaming-twitter" % "2.4.0"
+  // Config Library
+  "com.typesafe" % "config" % configVersion
+
+)
