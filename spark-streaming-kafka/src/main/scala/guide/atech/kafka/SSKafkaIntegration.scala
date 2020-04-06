@@ -3,6 +3,7 @@ package guide.atech.kafka
 import guide.atech.schema.Car
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
+import org.apache.spark.sql.types.{StringType, StructField, StructType}
 
 /**
   * Ref Docs: https://spark.apache.org/docs/latest/structured-streaming-kafka-integration.html
@@ -16,6 +17,7 @@ import org.apache.spark.sql.functions._
 object SSKafkaIntegration {
 
   val topic = "atechguide_first_topic"
+  val jsonTopic = "atechguide_car_json"
   val startingOffset = "earliest"
 
   private val spark = SparkSession.builder()
@@ -98,14 +100,52 @@ object SSKafkaIntegration {
       .select(
         col("Name").as("key"),
         to_json(struct(col("Name"), col("Horsepower"), col("Origin"))).cast("String").as("value")
-      )
+      ).limit(3)
 
     carsJsonKafkaDF
       .writeStream
       .format("kafka")
       .option("kafka.bootstrap.servers", "localhost:9092")
-      .option("topic", "atechguide")
+      .option("topic", jsonTopic)
       .option("checkpointLocation", "checkpoint")
+      .start()
+      .awaitTermination()
+
+  }
+
+  private def readJsonToKafka(): Unit = {
+
+
+    val carsData = spark
+      .readStream
+      .format("kafka")
+      .option("kafka.bootstrap.servers", "localhost:9092")
+      .option("startingOffsets", startingOffset)
+      .option("subscribe", jsonTopic)
+      .load()
+
+    val schema = StructType(Seq(
+      StructField("Name", StringType),
+      StructField("Horsepower", StringType),
+      StructField("Origin", StringType)
+    ))
+
+    /**
+     *
+     * +--------------------+--------------------+--------------------+----------+------+
+     * |                 key|                data|                Name|Horsepower|Origin|
+     * +--------------------+--------------------+--------------------+----------+------+
+     * |chevrolet chevell...|[chevrolet chevel...|chevrolet chevell...|       130|   USA|
+     * |   buick skylark 320|[buick skylark 32...|   buick skylark 320|       165|   USA|
+     * |  plymouth satellite|[plymouth satelli...|  plymouth satellite|       150|   USA|
+     * +--------------------+--------------------+--------------------+----------+------+
+     */
+    carsData
+      .select(expr("cast(key as string) as key"), expr("cast(value as string) as value"), col("topic"))
+      .select(col("key"), from_json(col("value"), schema).as("data"))
+      .select("key", "data", "data.*")
+      .writeStream
+      .format("console")
       .start()
       .awaitTermination()
 
@@ -113,9 +153,9 @@ object SSKafkaIntegration {
 
   def main(args: Array[String]): Unit = {
 
-     readFromKafka()
-    // writeToKafka()
-   // writeJsonToKafka()
+     //readFromKafka()
+    //writeToKafka()
+    readJsonToKafka()
 
   }
 

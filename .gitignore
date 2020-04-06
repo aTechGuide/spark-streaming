@@ -15,6 +15,7 @@ spark-streaming-cassandra/target/*
 spark-streaming-kafka/project/target/*
 spark-streaming-kafka/project/project/target/*
 spark-streaming-kafka/target/*
+spark-streaming-kafka/checkpoint/*
 
 spark-streaming-akka-streams/project/target/*
 spark-streaming-akka-streams/target/*
