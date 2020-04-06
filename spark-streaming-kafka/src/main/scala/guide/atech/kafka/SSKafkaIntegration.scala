@@ -15,6 +15,9 @@ import org.apache.spark.sql.functions._
 
 object SSKafkaIntegration {
 
+  val topic = "atechguide_first_topic"
+  val startingOffset = "earliest"
+
   private val spark = SparkSession.builder()
     .appName(getClass.getSimpleName)
     .master("local[2]")
@@ -23,18 +26,37 @@ object SSKafkaIntegration {
   spark.sparkContext.setLogLevel("ERROR")
 
 
+  /**
+   * Sample of what's read from Kafka
+   *  - [Without expr("cast(value as string) as actualValue")]
+   *
+   * +----------+--------------------+--------------------+---------+------+--------------------+-------------+
+   * |       key|               value|               topic|partition|offset|           timestamp|timestampType|
+   * +----------+--------------------+--------------------+---------+------+--------------------+-------------+
+   * |[4B 65 79]|[56 61 6C 75 65 2...|atechguide_first_...|        0|     8|2020-04-06 16:56:...|            0|
+   * +----------+--------------------+--------------------+---------+------+--------------------+-------------+
+   *
+   * - [With expr("cast(key as string) as key") , expr("cast(value as string) as actualValue")]
+   *
+   * +-----+-----------+--------------------+
+   * |  key|actualValue|               topic|
+   * +-----+-----------+--------------------+
+   * |key 2|    Value 2|atechguide_first_...|
+   * +-----+-----------+--------------------+
+   */
   private def readFromKafka(): Unit = {
 
     val kafkaDF = spark
       .readStream
       .format("kafka")
       .option("kafka.bootstrap.servers", "localhost:9092")
-      .option("subscribe", "atechguide")
+      .option("startingOffsets", startingOffset)
+      .option("subscribe", topic)
       .load()
 
 
     kafkaDF
-      .select(col("topic"), expr("cast(value as string) as actualValue"))
+      .select(expr("cast(key as string) as key") , expr("cast(value as string) as actualValue"), col("topic"))
       .writeStream
       .format("console")
       .outputMode("append")
@@ -91,9 +113,9 @@ object SSKafkaIntegration {
 
   def main(args: Array[String]): Unit = {
 
-    // readFromKafka()
+     readFromKafka()
     // writeToKafka()
-    writeJsonToKafka()
+   // writeJsonToKafka()
 
   }
 
