@@ -13,6 +13,7 @@ spark-streaming-cassandra/project/target/*
 spark-streaming-cassandra/target/*
 
 spark-streaming-kafka/project/target/*
+spark-streaming-kafka/project/project/target/*
 spark-streaming-kafka/target/*
 
 spark-streaming-akka-streams/project/target/*
