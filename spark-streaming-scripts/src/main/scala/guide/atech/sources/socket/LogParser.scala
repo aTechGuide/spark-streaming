@@ -1,4 +1,4 @@
-package guide.atech.socket
+package guide.atech.sources.files.socket
 
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.{Seconds, StreamingContext}

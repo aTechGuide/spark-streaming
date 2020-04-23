@@ -87,15 +87,23 @@ object MemoryStreamTesting {
 
     // It uses two implicits: Encoder[Int] and SQLContext
     val intsInput = MemoryStream[Int]
+    val queryName = "TestingTable"
 
     val memoryQuery = intsInput.toDF
       .writeStream
+      .queryName(queryName)
       .format("console")
       .start
 
     intsInput.addData(0, 1, 2)
 
     memoryQuery.processAllAvailable()
+
+    // Following will throw exception, "Table or view not found: TestingTable;;"
+//    spark
+//      .table(queryName)
+//      .as[Int]
+//      .show(false)
   }
 
   def main(args: Array[String]): Unit = {

@@ -1,4 +1,4 @@
-package guide.atech.socket
+package guide.atech.sources.files.socket
 
 import java.net.Socket
 

@@ -1,4 +1,4 @@
-package guide.atech.files
+package guide.atech.sources.files
 
 import org.apache.spark.sql.SparkSession
 import guide.atech.schema.common._

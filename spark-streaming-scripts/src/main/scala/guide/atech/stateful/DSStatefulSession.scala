@@ -5,7 +5,7 @@ import org.apache.spark.storage.StorageLevel
 import org.apache.spark.sql.SparkSession
 import java.util.regex.Matcher
 
-import guide.atech.socket.LogUtils
+import guide.atech.sources.files.socket.LogUtils
 
 /**
   * Reference => https://www.udemy.com/course/taming-big-data-with-spark-streaming-hands-on

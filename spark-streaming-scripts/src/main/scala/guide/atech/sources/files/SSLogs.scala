@@ -1,10 +1,10 @@
-package guide.atech.files
+package guide.atech.sources.files
 
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.regex.{Matcher, Pattern}
 
-import guide.atech.socket.LogUtils
+import guide.atech.sources.files.socket.LogUtils
 import org.apache.spark.sql.functions.window
 import org.apache.spark.sql.{Row, SparkSession}
 
